@@ -6,23 +6,17 @@ const catInfoEl = document.querySelector('.cat-info');
 
 const loadEl = document.querySelector('.loader');
 const errorEl = document.querySelector('.error');
-loadEl.style.display = 'none';
-errorEl.style.display = 'none';
 
 let storedBreeds = [];
-let selectBreed = null;
 
-//   const slimSelect = new SlimSelect({
-//     select: selectEl,
-//   });
-//   slimSelect.setData(selectEl.option);
+loadEl.style.display = 'block';
+errorEl.style.display = 'none';
 
 fetchBreeds()
   .then(data => {
     storedBreeds = data;
     for (let i = 0; i < storedBreeds.length; i++) {
       const breed = storedBreeds[i];
-
       let option = document.createElement('option');
       option.value = i;
       option.innerHTML = `${breed.name}`;
@@ -32,10 +26,12 @@ fetchBreeds()
   .catch(err => console.log(err));
 
 function onClick(e) {
+  catInfoEl.innerHTML = '';
   const breedId = selectEl.value;
-
+  loadEl.style.display = 'block';
   fetchCatByBreed(breedId)
     .then(cats => {
+      loadEl.style.display = 'none';
       const catMarkup = createCatMarkup(cats);
       catInfoEl.insertAdjacentHTML('beforeend', catMarkup);
     })

@@ -13,14 +13,14 @@ function fetchBreeds() {
 }
 
 function fetchCatByBreed(breedId) {
-  fetch(`${BASE_URL}images/search?api_key=${key}&breed_ids=${breedId}`).then(
-    resp => {
-      if (!resp.ok) {
-        throw new Error(resp.statusText);
-      }
-      return resp.json();
+  return fetch(
+    `${BASE_URL}images/search?api_key=${key}&breed_ids=${breedId}`
+  ).then(resp => {
+    if (!resp.ok) {
+      throw new Error(resp.statusText);
     }
-  );
+    return resp.json();
+  });
 }
 
 export { fetchBreeds, fetchCatByBreed };
