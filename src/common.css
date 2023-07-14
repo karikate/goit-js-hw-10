@@ -10,8 +10,3 @@
   width: 500px;
   margin: 10px 20px;
 }
-@keyframes lineGrow {
-  to {
-    width: 100%;
-  }
-}
