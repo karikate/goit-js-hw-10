@@ -1,4 +1,5 @@
 import SlimSelect from 'slim-select';
+import Notiflix from 'notiflix';
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 
 const selectEl = document.querySelector('.breed-select');
@@ -7,23 +8,26 @@ const catInfoEl = document.querySelector('.cat-info');
 const loadEl = document.querySelector('.loader');
 const errorEl = document.querySelector('.error');
 
-let storedBreeds = [];
-
 loadEl.style.display = 'block';
 errorEl.style.display = 'none';
+selectEl.style.display = 'none';
+
+function onErr(err) {
+  loadEl.style.display = 'none';
+  Notiflix.Notify.failure(errorEl.textContent);
+}
 
 fetchBreeds()
   .then(data => {
-    storedBreeds = data;
-    for (let i = 0; i < storedBreeds.length; i++) {
-      const breed = storedBreeds[i];
-      let option = document.createElement('option');
-      option.value = i;
-      option.innerHTML = `${breed.name}`;
-      selectEl.appendChild(option);
-    }
+    const markup = data
+      .map(({ id, name }) => `<option value="${id}">${name}</option>`)
+      .join('');
+
+    selectEl.innerHTML = markup;
+    selectEl.style.display = 'block';
+    loadEl.style.display = 'none';
   })
-  .catch(err => console.log(err));
+  .catch(err => onErr(err));
 
 function onClick(e) {
   catInfoEl.innerHTML = '';
@@ -32,25 +36,30 @@ function onClick(e) {
   fetchCatByBreed(breedId)
     .then(cats => {
       loadEl.style.display = 'none';
+      errorEl.style.display = 'none';
       const catMarkup = createCatMarkup(cats);
       catInfoEl.insertAdjacentHTML('beforeend', catMarkup);
     })
-    .catch(err => console.log(err));
+    .catch(err => onErr(err));
 }
 
 function createCatMarkup(cats) {
   return cats
     .map(storedBreeds => {
-      return `
+      return `<div class="img-wrap" width="360">
         <img class="img" src="${storedBreeds.url}" width="360" />
-        <div class="cat-box">
-            <h1 class="title">${storedBreeds.breeds[0].name}</h1>
-            <p class="desc">${storedBreeds.breeds[0].description}</p>
-            <p class="temper"><b>Temperament: </b>${storedBreeds.breeds[0].temperament}</p>
+        </div>
+        <div class="info-wrap width="360">
+            <h1 class="breed-cat">${storedBreeds.breeds[0].name}</h1>
+            <p class="desc-cat">${storedBreeds.breeds[0].description}</p>
+            <p class="temp-cat"><b>Temperament: </b>${storedBreeds.breeds[0].temperament}</p>
             </div>
         `;
     })
     .join('');
 }
 
+// catInfoEl.style.padding = '20px';
+// selectEl.style.textAlign = 'center';
+// selectEl.style.margin = '20px';
 selectEl.addEventListener('change', onClick);
