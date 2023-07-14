@@ -1,0 +1,10 @@
+.cat-info {
+  display: flex;
+}
+.selectEl {
+  text-align: center;
+  margin: 20px;
+}
+.info-wrap {
+  width: 500px;
+}
