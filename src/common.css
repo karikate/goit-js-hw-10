@@ -2,9 +2,16 @@
   display: flex;
 }
 .selectEl {
-  text-align: center;
-  margin: 20px;
+  display: block;
+  margin-right: 200px;
 }
+
 .info-wrap {
   width: 500px;
+  margin: 10px 20px;
+}
+@keyframes lineGrow {
+  to {
+    width: 100%;
+  }
 }

@@ -1,4 +1,5 @@
 import SlimSelect from 'slim-select';
+import 'slim-select/dist/slimselect.css';
 import Notiflix from 'notiflix';
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 
@@ -26,6 +27,9 @@ fetchBreeds()
     selectEl.innerHTML = markup;
     selectEl.style.display = 'block';
     loadEl.style.display = 'none';
+    // new SlimSelect({
+    //   select: selectEl,
+    // });
   })
   .catch(err => onErr(err));
 
@@ -59,7 +63,4 @@ function createCatMarkup(cats) {
     .join('');
 }
 
-// catInfoEl.style.padding = '20px';
-// selectEl.style.textAlign = 'center';
-// selectEl.style.margin = '20px';
 selectEl.addEventListener('change', onClick);
