@@ -11,8 +11,9 @@ const errorEl = document.querySelector('.error');
 
 loadEl.style.display = 'block';
 errorEl.style.display = 'none';
-// selectEl.style.display = 'none';
+selectEl.style.display = 'none';
 
+loadEl.before.textContent = 'Loading data, please wait...';
 function onErr(err) {
   loadEl.style.display = 'none';
   Notiflix.Notify.failure(errorEl.textContent);
@@ -25,7 +26,7 @@ fetchBreeds()
       .join('');
 
     selectEl.innerHTML = markup;
-    selectEl.style.display = 'block';
+    selectEl.style.display = 'flex';
     loadEl.style.display = 'none';
     new SlimSelect({
       select: selectEl,

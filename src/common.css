@@ -1,12 +1,39 @@
+.breed-select {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .cat-info {
   display: flex;
 }
-/* .ss-main {
-  display: flex;
-  margin-right: 200px;
-} */
 
 .info-wrap {
   width: 500px;
   margin: 10px 20px;
+}
+
+.loader {
+  display: block;
+  position: relative;
+  height: 40px;
+  width: 80%;
+  border: 1px solid white;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 15px;
+  padding: 3px;
+}
+.loader:after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 50px;
+  background: #10673a;
+  animation: 1s prog ease-in infinite;
+}
+
+@keyframes prog {
+  to {
+    width: 100%;
+  }
 }
