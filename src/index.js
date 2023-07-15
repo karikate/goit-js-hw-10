@@ -11,7 +11,7 @@ const errorEl = document.querySelector('.error');
 
 loadEl.style.display = 'block';
 errorEl.style.display = 'none';
-selectEl.style.display = 'none';
+// selectEl.style.display = 'none';
 
 function onErr(err) {
   loadEl.style.display = 'none';
@@ -27,13 +27,13 @@ fetchBreeds()
     selectEl.innerHTML = markup;
     selectEl.style.display = 'block';
     loadEl.style.display = 'none';
-    // new SlimSelect({
-    //   select: selectEl,
-    // });
+    new SlimSelect({
+      select: selectEl,
+    });
   })
   .catch(err => onErr(err));
 
-function onClick(e) {
+function onClick() {
   catInfoEl.innerHTML = '';
   const breedId = selectEl.value;
   loadEl.style.display = 'block';
@@ -42,7 +42,11 @@ function onClick(e) {
       loadEl.style.display = 'none';
       errorEl.style.display = 'none';
       const catMarkup = createCatMarkup(cats);
+
       catInfoEl.insertAdjacentHTML('beforeend', catMarkup);
+      if (!cats.length) {
+        Notiflix.Notify.failure('Sorry, but the cat wasn`t found');
+      }
     })
     .catch(err => onErr(err));
 }
